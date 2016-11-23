@@ -302,6 +302,7 @@
 				03CD52DF1DDE9392002F2350 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
