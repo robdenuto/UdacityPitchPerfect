@@ -20,6 +20,8 @@ class RecordsSoundViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         stopRecordingButton.isEnabled=false
+        recordButton.imageView?.contentMode = .scaleAspectFit
+        stopRecordingButton.imageView?.contentMode = .scaleAspectFit
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,9 +31,7 @@ class RecordsSoundViewController: UIViewController, AVAudioRecorderDelegate {
     
     
     @IBAction func recordAudio(_ sender: AnyObject) {
-        recordingLabel.text="Recording in Progress"
-        recordButton.isEnabled=false
-        stopRecordingButton.isEnabled=true
+        configRecordButton(isRecording: true)
         
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)[0] as String
         let recordingName = "recordedvoice.wav"
@@ -51,9 +51,7 @@ class RecordsSoundViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     @IBAction func stopRecording(_ sender: Any) {
-        stopRecordingButton.isEnabled=false
-        recordButton.isEnabled=true
-        recordingLabel.text="Tap to Record"
+        configRecordButton(isRecording: false)
         
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
@@ -67,6 +65,20 @@ class RecordsSoundViewController: UIViewController, AVAudioRecorderDelegate {
             print("recording failed")
         }
     }
+    
+    
+    
+    
+    func configRecordButton(isRecording:Bool){
+        recordingLabel.text = isRecording ? "Recording in Progress" : "Tap to Record";
+        stopRecordingButton.isEnabled = isRecording ? true : false;
+        recordButton.isEnabled = isRecording ? false : true;
+        
+        
+    }
+    
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "stopRecording" {
